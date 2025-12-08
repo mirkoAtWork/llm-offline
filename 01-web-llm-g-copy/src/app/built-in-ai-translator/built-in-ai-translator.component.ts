@@ -103,4 +103,9 @@ export class BuiltInAiTranslatorComponent {
         // Simulate translation for now
         this.translatedText.set(`[Translated to ${this.targetLang()}]: ${this.sourceText()}`);
     }
+
+    updateSourceText(newText: string) {
+        this.sourceText.set(newText);
+        this.translate();
+    }
 }

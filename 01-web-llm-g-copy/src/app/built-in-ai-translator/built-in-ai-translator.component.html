@@ -102,7 +102,7 @@
                 <textarea matInput
                           placeholder="Enter text"
                           [ngModel]="sourceText()"
-                          (ngModelChange)="sourceText.set($event); translate()"
+                          (ngModelChange)="updateSourceText($event)"
                           rows="10"></textarea>
                 @if (sourceText()) {
                 <button mat-icon-button

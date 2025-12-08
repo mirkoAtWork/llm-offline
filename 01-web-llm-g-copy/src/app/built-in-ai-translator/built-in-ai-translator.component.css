@@ -5,6 +5,7 @@
 }
 
 .translation-panels {
+    overflow-x: auto;
     display: flex;
     flex-direction: row;
     gap: 16px;
