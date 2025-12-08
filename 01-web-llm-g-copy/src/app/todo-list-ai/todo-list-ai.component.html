@@ -91,7 +91,16 @@
              placeholder="Prompt"
              #prompt
              (keyup.enter)="runPrompt(prompt.value)"
+             (input)="(null)"
              [disabled]="!ready()">
+      @if (prompt.value) {
+      <button mat-icon-button
+              matSuffix
+              (click)="prompt.value = ''"
+              [attr.aria-label]="'Clear prompt'">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
     </mat-form-field>
 
     <button mat-raised-button

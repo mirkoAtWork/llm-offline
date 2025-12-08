@@ -5,7 +5,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatList, MatListItem } from '@angular/material/list';
 import { NavComponent } from '../nav/nav.component';
 import { type Todo } from '../todo';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatCard, MatCardContent } from '@angular/material/card';
@@ -28,6 +28,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatListItem,
     MatCheckbox,
     MatFormField,
+    MatSuffix,
     MatInput,
     MatButton,
     MatProgressBar,
