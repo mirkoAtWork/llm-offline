@@ -1,0 +1,56 @@
+:host {
+  display: block;
+  height: 100%;
+}
+.todo-list-ai-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.progress-bar-container {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 16px;
+}
+.progress-bar-container h5 {
+  white-space: nowrap;
+  margin: 0;
+}
+.chat-container{
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+}
+
+[mat-fab] {
+  position: fixed;
+  bottom: 92px;
+  right: 16px;
+}
+
+mat-list-item .content {
+  display: flex;
+  align-items: center;
+}
+
+mat-list-item .content span {
+  flex: 1;
+}
+
+pre {
+  text-wrap: wrap;
+  flex: 1;
+  margin-inline: 16px;
+}
+
+.chat-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-inline: 16px;
+}
+
+.chat-container mat-form-field {
+  flex: 1;
+}
