@@ -2,22 +2,26 @@
   display: block;
   height: 100%;
 }
+
 .todo-list-ai-container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
+
 .progress-bar-container {
   display: flex;
   align-items: baseline;
   gap: 8px;
   margin: 16px;
 }
+
 .progress-bar-container h5 {
   white-space: nowrap;
   margin: 0;
 }
-.chat-container{
+
+.chat-container {
   margin-top: auto;
   display: flex;
   align-items: baseline;
@@ -46,7 +50,7 @@ pre {
 
 .chat-container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
   margin-inline: 16px;
 }
@@ -58,4 +62,3 @@ pre {
 .model-selector {
   margin: 16px;
 }
-
