@@ -49,6 +49,7 @@
       <input matInput
              placeholder="Prompt"
              #prompt
+             (keyup.enter)="runPrompt(prompt.value)"
              [disabled]="!ready()">
     </mat-form-field>
 
