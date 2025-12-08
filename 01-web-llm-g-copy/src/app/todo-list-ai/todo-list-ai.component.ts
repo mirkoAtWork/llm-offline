@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
@@ -59,6 +59,24 @@ export class TodoListAiComponent implements OnInit {
     { id: 'Qwen2-1.5B-Instruct-q4f16_1-MLC', name: 'Qwen2 1.5B' }
   ];
   protected selectedModel = signal(this.models[0].id);
+
+  @ViewChild('prompt') promptInput!: ElementRef<HTMLInputElement>;
+
+  @HostListener('window:keydown.ctrl.p', ['$event'])
+  focusPrompt(event: KeyboardEvent) {
+    // If the user is already typing in an input field (including the prompt itself),
+    // we should not hijack the key press, allowing them to type 'P'.
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      return;
+    }
+
+    event.preventDefault();
+    this.promptInput?.nativeElement?.focus();
+    if (this.promptInput?.nativeElement) {
+      this.promptInput.nativeElement.value = '';
+    }
+  }
 
   async ngOnInit() {
     await this.initEngine(this.selectedModel());
