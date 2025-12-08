@@ -12,6 +12,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="info-content">
+                <!-- orientation="horizontal" -->
                 <mat-stepper orientation="vertical"
                              [linear]="false">
                     <!-- Step 1: Overview -->
@@ -68,6 +69,17 @@
                                 <code>const translated = await translator.translate('Hello world');</code>
                             </li>
                         </ol>
+                    </mat-step>
+
+                    <!-- Step 4: References -->
+                    <mat-step label="References">
+                        <h3>Useful Links</h3>
+                        <ul>
+                            <li>
+                                <a href="https://developer.chrome.com/docs/ai/translator-api"
+                                   target="_blank">Translator API Documentation</a>
+                            </li>
+                        </ul>
                     </mat-step>
                 </mat-stepper>
             </div>
