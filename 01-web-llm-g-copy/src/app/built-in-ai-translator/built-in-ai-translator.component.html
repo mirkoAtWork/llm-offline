@@ -1,1 +1,66 @@
-<p>Built-in AI Translator works!</p>
+<div class="translator-container">
+    <div class="lang-controls">
+        <!-- Just for visual alignment if needed, or we can put the swap button in the middle -->
+    </div>
+
+    <div class="translation-panels">
+        <!-- Source Panel -->
+        <div class="panel source-panel">
+            <mat-tab-group [(selectedIndex)]="sourceLangIndex"
+                           (selectedTabChange)="onSourceTabChange($event)"
+                           animationDuration="0ms">
+                @for (lang of languages; track lang.code) {
+                <mat-tab [label]="lang.name"></mat-tab>
+                }
+            </mat-tab-group>
+
+            <mat-form-field appearance="fill"
+                            class="text-area-field">
+                <textarea matInput
+                          placeholder="Enter text"
+                          [ngModel]="sourceText()"
+                          (ngModelChange)="sourceText.set($event); translate()"
+                          rows="10"></textarea>
+                @if (sourceText()) {
+                <button mat-icon-button
+                        matSuffix
+                        (click)="sourceText.set(''); translate()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                }
+            </mat-form-field>
+        </div>
+
+        <!-- Swap Button (Centered Overlay or Flex item) -->
+        <div class="swap-container">
+            <button mat-icon-button
+                    (click)="swapLanguages()">
+                <mat-icon>swap_horiz</mat-icon>
+            </button>
+        </div>
+
+        <!-- Target Panel -->
+        <div class="panel target-panel">
+            <mat-tab-group [(selectedIndex)]="targetLangIndex"
+                           (selectedTabChange)="onTargetTabChange($event)"
+                           animationDuration="0ms">
+                @for (lang of languages; track lang.code) {
+                <mat-tab [label]="lang.name"></mat-tab>
+                }
+            </mat-tab-group>
+
+            <mat-form-field appearance="fill"
+                            class="text-area-field">
+                <textarea matInput
+                          readonly
+                          [value]="translatedText()"
+                          rows="10"></textarea>
+                <button mat-icon-button
+                        matSuffix
+                        (click)="copyToClipboard()">
+                    <mat-icon>content_copy</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

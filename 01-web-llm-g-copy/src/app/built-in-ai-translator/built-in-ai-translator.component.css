@@ -1,0 +1,72 @@
+.translator-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 16px;
+    gap: 16px;
+    box-sizing: border-box;
+}
+
+.translation-panels {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex: 1;
+    position: relative;
+    /* For swap button positioning if we want */
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    /* or theme background */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+}
+
+.swap-container {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 56px;
+    /* align with text area roughly or tabs */
+    justify-content: center;
+}
+
+.text-area-field {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure textarea fills space */
+::ng-deep .text-area-field .mat-mdc-form-field-flex {
+    flex: 1;
+    height: 100%;
+}
+
+::ng-deep .text-area-field .mat-mdc-form-field-infix {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+textarea {
+    min-height: 200px;
+    resize: none;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+
+@media (max-width: 768px) {
+    .translation-panels {
+        flex-direction: column;
+    }
+}
