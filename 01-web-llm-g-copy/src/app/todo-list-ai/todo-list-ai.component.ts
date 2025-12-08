@@ -11,6 +11,8 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
 import { CommonModule } from '@angular/common';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-list-ai',
@@ -29,7 +31,10 @@ import { CommonModule } from '@angular/common';
     MatButton,
     MatProgressBar,
     MatCard,
-    MatCardContent
+    MatCardContent,
+    MatSelect,
+    MatOption,
+    FormsModule
   ],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'
@@ -45,9 +50,34 @@ export class TodoListAiComponent implements OnInit {
   protected readonly reply = signal('');
   protected engine?: MLCEngine;
 
+  readonly models = [
+    { id: 'Llama-3.2-3B-Instruct-q4f32_1-MLC', name: 'Llama 3.2 3B' },
+    { id: 'Phi-3-mini-4k-instruct-q4f16_1-MLC', name: 'Phi 3 Mini' },
+    { id: 'gemma-2b-it-q4f32_1-MLC', name: 'Gemma 2B' },
+    { id: 'Qwen2-1.5B-Instruct-q4f16_1-MLC', name: 'Qwen2 1.5B' }
+  ];
+  protected selectedModel = signal(this.models[0].id);
+
   async ngOnInit() {
-    const model = 'Llama-3.2-3B-Instruct-q4f32_1-MLC';
-    this.engine = await CreateMLCEngine(model, {
+    await this.initEngine(this.selectedModel());
+  }
+
+  async onModelChange(modelId: string) {
+    this.selectedModel.set(modelId);
+    await this.initEngine(modelId);
+  }
+
+  private async initEngine(modelId: string) {
+    this.ready.set(false);
+    this.progress.set(0);
+    // If engine exists, we might need to unload or reload. 
+    // MLCEngine doesn't have a specific 'unload' in the types shown, but reloading with CreateMLCEngine usually handles it or we create a new one.
+    // However, properly, we should reload.
+    if (this.engine) {
+      await this.engine.unload();
+    }
+
+    this.engine = await CreateMLCEngine(modelId, {
       initProgressCallback: ({ progress }) =>
         this.progress.set(progress)
     });

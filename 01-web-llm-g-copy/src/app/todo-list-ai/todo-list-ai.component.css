@@ -54,3 +54,8 @@ pre {
 .chat-container mat-form-field {
   flex: 1;
 }
+
+.model-selector {
+  margin: 16px;
+}
+
