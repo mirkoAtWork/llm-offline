@@ -13,6 +13,7 @@ import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine } from '@mlc-ai/
 import { CommonModule } from '@angular/common';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-todo-list-ai',
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     MatCardContent,
     MatSelect,
     MatOption,
-    FormsModule
+    FormsModule,
+    MatExpansionModule
   ],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'

@@ -38,6 +38,11 @@ mat-list-item .content span {
   flex: 1;
 }
 
+.model-selector {
+  margin-inline: 16px;
+  margin-top: 16px;
+}
+
 .reply-card {
   margin: 16px;
 }
@@ -61,6 +66,33 @@ mat-list-item .content span {
   flex: 1;
 }
 
-.model-selector {
+
+.info-accordion {
   margin: 16px;
+}
+
+.info-accordion mat-expansion-panel-header {
+  height: 36px !important;
+  font-size: 14px;
+}
+
+.info-content h3 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.info-content ul {
+  padding-left: 20px;
+}
+
+.info-content li {
+  margin-bottom: 8px;
+}
+
+.info-content code {
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
 }

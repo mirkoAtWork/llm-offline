@@ -1,4 +1,45 @@
 <main class="todo-list-ai-container">
+  <mat-accordion class="info-accordion">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Cos'è WebLLM?
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="info-content">
+        <h3>Cos'è WebLLM</h3>
+        <p>
+          <strong>WebLLM</strong> è una libreria ad alte prestazioni che porta i Large Language Models (LLM) e i Large
+          Multimodal Models (LMM) direttamente nei browser web.
+        </p>
+
+        <h3>Come funziona</h3>
+        <p>
+          Utilizza <strong>WebGPU</strong> per l'accelerazione hardware direttamente nel browser, permettendo
+          l'esecuzione
+          di modelli pesanti senza la necessità di inviare dati a un server (Privacy First). Tutto avviene localmente
+          sul
+          tuo dispositivo.
+        </p>
+
+        <h3>Comandi Principali</h3>
+        <ul>
+          <li>
+            <code>CreateMLCEngine(modelId, config)</code>: Inizializza il motore AI con il modello specificato.
+          </li>
+          <li>
+            <code>engine.chat.completions.create({{ '{' }} messages {{ '}' }})</code>: Genera una risposta basata sulla
+            cronologia della
+            chat.
+          </li>
+          <li>
+            <code>engine.resetChat()</code>: Pulisce la cronologia della conversazione corrente.
+          </li>
+        </ul>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+
   <mat-form-field class="model-selector">
     <mat-label>Select Model</mat-label>
     <mat-select [value]="selectedModel()"
@@ -65,5 +106,7 @@
           (click)="addTodo()">
     <mat-icon>add</mat-icon>
   </button>
+
+
 
 </main>
