@@ -3,6 +3,7 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
         FormsModule,
         MatTabsModule,
         MatExpansionModule,
+        MatStepperModule,
         MatFormFieldModule,
         MatSuffix,
         MatInputModule,

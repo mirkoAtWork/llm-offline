@@ -12,34 +12,64 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="info-content">
-                <h3>Stable APIs (Available Now)</h3>
+                <mat-stepper orientation="vertical"
+                             [linear]="false">
+                    <!-- Step 1: Overview -->
+                    <mat-step label="Overview">
+                        <h3>Stable APIs (Available Now)</h3>
+                        <h4>Translator API</h4>
+                        <p>
+                            L'API sperimentale <strong>Translator API</strong> consente di eseguire traduzioni in tempo
+                            reale
+                            direttamente nel browser, senza chiamate lato server.
+                        </p>
+                        <h4>Language Detection API</h4>
+                        <p>
+                            La <strong>Language Detection API</strong> permette di identificare automaticamente la
+                            lingua di un
+                            testo fornito.
+                        </p>
+                        <h3>Other Experimental APIs</h3>
+                        <ul>
+                            <li><strong>Prompt API</strong>: Modelli Gemini Nano.</li>
+                            <li><strong>Summarization API</strong>: Generazione riassunti.</li>
+                            <li><strong>Write API</strong>: Assistenza alla scrittura.</li>
+                            <li><strong>Rewriter API</strong>: Riformulazione testi.</li>
+                        </ul>
+                    </mat-step>
 
-                <h4>Translator API</h4>
-                <p>
-                    L'API sperimentale <strong>Translator API</strong> consente di eseguire traduzioni in tempo reale
-                    direttamente nel browser, senza chiamate lato server. È ideale per app offline o che necessitano
-                    di bassa latenza.
-                </p>
+                    <!-- Step 2: Language Detector Tutorial -->
+                    <mat-step label="Language Detector API Tutorial">
+                        <p>Tutorial: Come rilevare la lingua.</p>
+                        <ol>
+                            <li>Verifica disponibilità:
+                                <code>const available = (await window.ai.languageDetector.capabilities()).available;</code>
+                            </li>
+                            <li>Crea il detector:
+                                <code>const detector = await window.ai.languageDetector.create();</code>
+                            </li>
+                            <li>Rileva:
+                                <code>const results = await detector.detect('Ciao mondo');</code>
+                            </li>
+                        </ol>
+                    </mat-step>
 
-                <h4>Language Detection API</h4>
-                <p>
-                    La <strong>Language Detection API</strong> permette di identificare automaticamente la lingua di un
-                    testo fornito. Utile per pre-configurare traduttori o adattare l'interfaccia utente.
-                </p>
-
-                <h3>Other Experimental APIs</h3>
-                <ul>
-                    <li><strong>Prompt API:</strong> Per interagire con modelli Gemini Nano integrati in Chrome.</li>
-                    <li><strong>Summarization API:</strong> Per generare riassunti di testi lunghi.</li>
-                    <li><strong>Write API:</strong> Per assistere nella stesura e riformulazione di testi.</li>
-                    <li><strong>Rewriter API:</strong> Per modificare stile, tono o lunghezza di un testo.</li>
-                </ul>
-
-                <p style="margin-top: 16px; font-size: 0.9em; color: #666;">
-                    * Queste API sono parte dell'iniziativa "Built-in AI" di Chrome e potrebbero richiedere flag
-                    specifici
-                    o versioni Canary/Dev.
-                </p>
+                    <!-- Step 3: Translator API Tutorial -->
+                    <mat-step label="Translator API Tutorial">
+                        <p>Tutorial: Come tradurre testo.</p>
+                        <ol>
+                            <li>Verifica disponibilità:
+                                <code>const canTranslate = await window.translation.canTranslate({{ '{' }} sourceLanguage: 'en', targetLanguage: 'es' {{ '}' }});</code>
+                            </li>
+                            <li>Crea il traduttore:
+                                <code>const translator = await window.translation.createTranslator({{ '{' }} sourceLanguage: 'en', targetLanguage: 'es' {{ '}' }});</code>
+                            </li>
+                            <li>Traduci:
+                                <code>const translated = await translator.translate('Hello world');</code>
+                            </li>
+                        </ol>
+                    </mat-step>
+                </mat-stepper>
             </div>
         </mat-expansion-panel>
     </mat-accordion>
