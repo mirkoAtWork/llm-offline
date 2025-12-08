@@ -10,7 +10,7 @@ import { MatInput } from '@angular/material/input';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
-import { CommonModule } from '@angular/common';
+
 import { MatSelect, MatOption } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -19,7 +19,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
   selector: 'app-todo-list-ai',
   standalone: true,
   imports: [
-    CommonModule,
     MatFabButton,
     MatIcon,
     MatIconButton,
@@ -38,7 +37,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatOption,
     FormsModule,
     MatExpansionModule
-  ],
+],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'
 })
