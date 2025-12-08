@@ -62,19 +62,20 @@ export class TodoListAiComponent implements OnInit {
 
   @ViewChild('prompt') promptInput!: ElementRef<HTMLInputElement>;
 
-  @HostListener('window:keydown.ctrl.p', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   focusPrompt(event: KeyboardEvent) {
-    // If the user is already typing in an input field (including the prompt itself),
-    // we should not hijack the key press, allowing them to type 'P'.
-    const target = event.target as HTMLElement;
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-      return;
-    }
+    // Check for Ctrl + P or Cmd + P
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'p') {
+      // If the user is already typing in an input field (including the prompt itself),
+      // we should not hijack the key press IF it's a typing action.
+      // However, Ctrl+P is rarely a typing action (it's Print).
+      // So we usually WANT to hijack it everywhere to prevent Print.
 
-    event.preventDefault();
-    this.promptInput?.nativeElement?.focus();
-    if (this.promptInput?.nativeElement) {
-      this.promptInput.nativeElement.value = '';
+      event.preventDefault();
+      if (this.promptInput?.nativeElement) {
+        this.promptInput.nativeElement.focus();
+        this.promptInput.nativeElement.value = '';
+      }
     }
   }
 
