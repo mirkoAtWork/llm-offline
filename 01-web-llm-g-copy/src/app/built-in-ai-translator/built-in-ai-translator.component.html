@@ -86,6 +86,17 @@
         </mat-expansion-panel>
     </mat-accordion>
 
+    <div class="progress-bar-container">
+        <h5>Download Translate progress: </h5>
+        <mat-progress-bar mode="determinate"
+                          [value]="loadingDetector() * 100"></mat-progress-bar>
+    </div>
+    <div class="detected-language">
+        DetectedLanguage:
+        @if(detectedLang().detectedLanguage != '' && detectedLang().detectedLanguage != "und") {
+        {{ detectedLang().detectedLanguage }} - Confidence: {{ detectedLang().confidence }}
+        }
+    </div>
     <div class="translation-panels">
         <!-- Source Panel -->
         <div class="panel source-panel">
@@ -107,7 +118,7 @@
                 @if (sourceText()) {
                 <button mat-icon-button
                         matSuffix
-                        (click)="sourceText.set(''); translate()">
+                        (click)="updateSourceText('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 }

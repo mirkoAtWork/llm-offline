@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -9,7 +9,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
 
+
+export interface IDetectionResult {
+    detectedLanguage: string;
+    confidence: number;
+}
 @Component({
     selector: 'app-built-in-ai-translator',
     standalone: true,
@@ -23,12 +30,14 @@ import { MatSelectModule } from '@angular/material/select';
         MatInputModule,
         MatButtonModule,
         MatIconModule,
-        MatSelectModule
+        MatSelectModule,
+        MatProgressBar
     ],
     templateUrl: './built-in-ai-translator.component.html',
     styleUrl: './built-in-ai-translator.component.css'
 })
-export class BuiltInAiTranslatorComponent {
+export class BuiltInAiTranslatorComponent implements OnInit {
+
     readonly languages = [
         { code: 'en', name: 'English' },
         { code: 'es', name: 'Spanish' },
@@ -37,6 +46,9 @@ export class BuiltInAiTranslatorComponent {
         { code: 'it', name: 'Italian' }
     ];
 
+    detector: any;
+    detectedLang = signal<IDetectionResult>({ detectedLanguage: '', confidence: 0 });
+    loadingDetector = signal(0);
     sourceText = signal('');
     translatedText = signal('');
     sourceLang = signal('en');
@@ -46,6 +58,7 @@ export class BuiltInAiTranslatorComponent {
     get sourceLangIndex(): number {
         return this.languages.findIndex(l => l.code === this.sourceLang());
     }
+
     set sourceLangIndex(index: number) {
         if (index >= 0 && index < this.languages.length) {
             this.sourceLang.set(this.languages[index].code);
@@ -60,6 +73,27 @@ export class BuiltInAiTranslatorComponent {
         if (index >= 0 && index < this.languages.length) {
             this.targetLang.set(this.languages[index].code);
             this.translate();
+        }
+    }
+
+    ngOnInit(): void {
+        this.checkForBuiltInAiTranslator();
+    }
+
+    async checkForBuiltInAiTranslator() {
+        if ('LanguageDetector' in window) {
+            // The Language Detector API is available.
+            const LanguageDetector = window.LanguageDetector;
+            // @ts-ignore
+            this.detector = await LanguageDetector.create({
+                // @ts-ignore
+                monitor: (m: any) => {
+                    m.addEventListener('downloadprogress', (e: any) => {
+                        this.loadingDetector.set(e.loaded);
+                        console.log(`Downloaded ${e.loaded * 100}%`);
+                    });
+                },
+            });
         }
     }
 
@@ -104,8 +138,19 @@ export class BuiltInAiTranslatorComponent {
         this.translatedText.set(`[Translated to ${this.targetLang()}]: ${this.sourceText()}`);
     }
 
+    detectLanguage() {
+        if (this.detector) {
+            this.detector.detect(this.sourceText())
+                .then((result: any) => {
+                    this.detectedLang.set(result[0]);
+                });
+        }
+    }
+
+
     updateSourceText(newText: string) {
         this.sourceText.set(newText);
+        this.detectLanguage();
         this.translate();
     }
 }
