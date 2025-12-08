@@ -37,13 +37,13 @@
     }
   </mat-list>
   @if(reply()) {
-  <mat-card>
+  <mat-card class="reply-card">
     <mat-card-content>
       <pre>{{ reply() }}</pre>
     </mat-card-content>
   </mat-card>
   }
-  <section class="chat-container">
+  <section class="prompt-container">
     <mat-form-field>
       <mat-label>{{ready()? 'Prompt': 'download model in progress...'}}</mat-label>
       <input matInput

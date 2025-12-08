@@ -21,11 +21,7 @@
   margin: 0;
 }
 
-.chat-container {
-  margin-top: auto;
-  display: flex;
-  align-items: baseline;
-}
+
 
 [mat-fab] {
   position: fixed;
@@ -42,20 +38,26 @@ mat-list-item .content span {
   flex: 1;
 }
 
-pre {
+.reply-card {
+  margin: 16px;
+}
+
+.reply-card pre {
   text-wrap: wrap;
   flex: 1;
   margin-inline: 16px;
 }
 
-.chat-container {
+
+.prompt-container {
   display: flex;
   align-items: baseline;
   gap: 16px;
+  margin-top: auto;
   margin-inline: 16px;
 }
 
-.chat-container mat-form-field {
+.prompt-container mat-form-field {
   flex: 1;
 }
 
