@@ -77,9 +77,10 @@ mat-list-item .content span {
 }
 
 .info-content h3 {
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-weight: 500;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--mat-sys-primary);
 }
 
 .info-content ul {

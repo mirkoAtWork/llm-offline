@@ -3,6 +3,47 @@
         <!-- Just for visual alignment if needed, or we can put the swap button in the middle -->
     </div>
 
+    <!-- Info Accordion -->
+    <mat-accordion class="info-accordion">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Chrome Built-in AI APIs
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="info-content">
+                <h3>Stable APIs (Available Now)</h3>
+
+                <h4>Translator API</h4>
+                <p>
+                    L'API sperimentale <strong>Translator API</strong> consente di eseguire traduzioni in tempo reale
+                    direttamente nel browser, senza chiamate lato server. È ideale per app offline o che necessitano
+                    di bassa latenza.
+                </p>
+
+                <h4>Language Detection API</h4>
+                <p>
+                    La <strong>Language Detection API</strong> permette di identificare automaticamente la lingua di un
+                    testo fornito. Utile per pre-configurare traduttori o adattare l'interfaccia utente.
+                </p>
+
+                <h3>Other Experimental APIs</h3>
+                <ul>
+                    <li><strong>Prompt API:</strong> Per interagire con modelli Gemini Nano integrati in Chrome.</li>
+                    <li><strong>Summarization API:</strong> Per generare riassunti di testi lunghi.</li>
+                    <li><strong>Write API:</strong> Per assistere nella stesura e riformulazione di testi.</li>
+                    <li><strong>Rewriter API:</strong> Per modificare stile, tono o lunghezza di un testo.</li>
+                </ul>
+
+                <p style="margin-top: 16px; font-size: 0.9em; color: #666;">
+                    * Queste API sono parte dell'iniziativa "Built-in AI" di Chrome e potrebbero richiedere flag
+                    specifici
+                    o versioni Canary/Dev.
+                </p>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+
     <div class="translation-panels">
         <!-- Source Panel -->
         <div class="panel source-panel">

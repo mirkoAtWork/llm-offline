@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,15 +13,16 @@ import { MatSelectModule } from '@angular/material/select';
     selector: 'app-built-in-ai-translator',
     standalone: true,
     imports: [
-    FormsModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSuffix,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSelectModule
-],
+        FormsModule,
+        MatTabsModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatSuffix,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSelectModule
+    ],
     templateUrl: './built-in-ai-translator.component.html',
     styleUrl: './built-in-ai-translator.component.css'
 })

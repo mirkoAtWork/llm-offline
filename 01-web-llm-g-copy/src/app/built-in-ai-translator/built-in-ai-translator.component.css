@@ -2,9 +2,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 16px;
-    gap: 16px;
-    box-sizing: border-box;
 }
 
 .translation-panels {
@@ -69,4 +66,54 @@ textarea {
     .translation-panels {
         flex-direction: column;
     }
+}
+
+/* Accordion Styles (Consistent with Mediapipe/Todo-List AI) */
+.info-accordion {
+    margin: 16px;
+}
+
+.translation-panels {
+    padding: 0 16px 16px 16px;
+}
+
+.info-accordion mat-expansion-panel-header {
+    height: 36px !important;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.info-content {
+    padding: 8px 0;
+}
+
+.info-content h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mat-sys-primary);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+}
+
+.info-content h4 {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: #333;
+}
+
+.info-content p {
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.info-content ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+}
+
+.info-content li {
+    margin-bottom: 6px;
+    line-height: 1.5;
 }
