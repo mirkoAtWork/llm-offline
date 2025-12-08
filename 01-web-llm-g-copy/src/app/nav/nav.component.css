@@ -16,8 +16,13 @@
   z-index: 1;
 }
 
+mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 64px);
+  flex: 1;
 }
