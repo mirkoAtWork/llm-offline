@@ -9,7 +9,7 @@ import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field'
 import { MatInput } from '@angular/material/input';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine } from '@mlc-ai/web-llm';
+import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine, ModelRecord, prebuiltAppConfig } from '@mlc-ai/web-llm';
 
 import { MatSelect, MatOption } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +37,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatOption,
     FormsModule,
     MatExpansionModule
-],
+  ],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'
 })
@@ -52,7 +52,7 @@ export class TodoListAiComponent implements OnInit {
   protected readonly reply = signal('');
   protected engine?: MLCEngine;
 
-  readonly models = [
+  public models = [
     { id: 'Llama-3.2-3B-Instruct-q4f32_1-MLC', name: 'Llama 3.2 3B' },
     { id: 'Phi-3-mini-4k-instruct-q4f16_1-MLC', name: 'Phi 3 Mini' },
     { id: 'gemma-2b-it-q4f32_1-MLC', name: 'Gemma 2B' },
@@ -80,7 +80,13 @@ export class TodoListAiComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.initModelFromWebLlm();
     await this.initEngine(this.selectedModel());
+  }
+  initModelFromWebLlm() {
+    const modelList: ModelRecord[] = prebuiltAppConfig.model_list;
+    console.log('modelList from webllm:', modelList);
+    this.models = prebuiltAppConfig.model_list.map((m) => { return { id: m.model_id, name: m.model } });
   }
 
   async onModelChange(modelId: string) {
@@ -130,9 +136,11 @@ export class TodoListAiComponent implements OnInit {
       The user will ask questions about their todo list.
       Here's the user's todo list:
       ${this.todos().map(todo => `* ${todo.text} (${todo.done ? 'done' : 'not done'})`).join('\n')}`;
+
+    const mandatoryPrompt = `Use only the following context when answering the questions at the end. Don't use any other knowledge.`
     const messages: ChatCompletionMessageParam[] = [
       { role: "system", content: systemPrompt },
-      { role: "user", content: userPrompt }
+      { role: "user", content: mandatoryPrompt + '\n\n' + userPrompt }
     ];
     const chunks = await this.engine!.chat.completions.create({ messages, stream: true });
     let reply = '';
