@@ -37,6 +37,14 @@ export interface IDetectionResult {
     styleUrl: './built-in-ai-translator.component.css'
 })
 export class BuiltInAiTranslatorComponent implements OnInit {
+    // ref.: https://web.dev/ai-translator/
+    // ref.: https://web.dev/ai-translator/translate-text/ 
+    // ref.: https://web.dev/ai-translator/detect-language/
+    // ref.: https://web.dev/ai-translator/availability/
+    // ref.: https://web.dev/ai-translator/monitor-download-progress/
+    // ref.: https://github.com/GoogleChromeLabs/web-ai-demos/blob/main/translation-language-detection-api-playground/script.js
+
+
 
     readonly languages = [
         { code: 'en', name: 'English' },
@@ -127,23 +135,48 @@ export class BuiltInAiTranslatorComponent implements OnInit {
 
         // Trigger translation after swap if there is text
         if (this.sourceText()) {
+            this.detectLanguage();
             this.translate();
         }
     }
 
-    translate() {
+    async translate() {
+        if (!this.sourceText()) {
+            return;
+        }
+        if ('Translator' in self) {
+            const sourceLanguage = this.sourceLang();
+            const targetLanguage = this.targetLang();
+            if (sourceLanguage == targetLanguage) {
+                this.translatedText.set(this.sourceText());
+                return;
+            }
+            // @ts-ignore
+            const availability = await Translator.availability({ sourceLanguage, targetLanguage });
+            if (availability == 'unavailable') {
+                console.log('Translation not available');
+                this.translatedText.set('Translation not available');
+            }
+            if (availability == 'available') {
+                // @ts-ignore
+                const translation = await Translator.create({
+                    sourceLanguage, targetLanguage
+                });
+                const translatedText = await translation.translate(this.sourceText())
+                this.translatedText.set(translatedText);
+            }
+        }
         // Placeholder for actual translation logic
-        console.log(`Translating "${this.sourceText()}" from ${this.sourceLang()} to ${this.targetLang()}`);
+        //console.log(`Translating "${this.sourceText()}" from ${this.sourceLang()} to ${this.targetLang()}`);
         // Simulate translation for now
-        this.translatedText.set(`[Translated to ${this.targetLang()}]: ${this.sourceText()}`);
+        //this.translatedText.set(`[Translated to ${this.targetLang()}]: ${this.sourceText()}`);
     }
 
-    detectLanguage() {
+    async detectLanguage() {
         if (this.detector) {
-            this.detector.detect(this.sourceText())
-                .then((result: any) => {
-                    this.detectedLang.set(result[0]);
-                });
+            const result = await this.detector.detect(this.sourceText())
+            this.detectedLang.set(result[0]);
+            this.translate()
         }
     }
 
