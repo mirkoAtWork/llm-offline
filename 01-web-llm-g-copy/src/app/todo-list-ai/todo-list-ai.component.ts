@@ -14,6 +14,14 @@ import { ChatCompletionMessageParam, CreateMLCEngine, MLCEngine, ModelRecord, pr
 import { MatSelect, MatOption } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+const DEFAULT_MODELS = [
+  { id: 'Llama-3.2-3B-Instruct-q4f32_1-MLC', name: 'Llama 3.2 3B' },
+  { id: 'Phi-3-mini-4k-instruct-q4f16_1-MLC', name: 'Phi 3 Mini' },
+  { id: 'gemma-2b-it-q4f32_1-MLC', name: 'Gemma 2B' },
+  { id: 'Qwen2-1.5B-Instruct-q4f16_1-MLC', name: 'Qwen2 1.5B' }
+];
 
 @Component({
   selector: 'app-todo-list-ai',
@@ -36,7 +44,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSelect,
     MatOption,
     FormsModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'
@@ -52,12 +61,8 @@ export class TodoListAiComponent implements OnInit {
   protected readonly reply = signal('');
   protected engine?: MLCEngine;
 
-  public models = [
-    { id: 'Llama-3.2-3B-Instruct-q4f32_1-MLC', name: 'Llama 3.2 3B' },
-    { id: 'Phi-3-mini-4k-instruct-q4f16_1-MLC', name: 'Phi 3 Mini' },
-    { id: 'gemma-2b-it-q4f32_1-MLC', name: 'Gemma 2B' },
-    { id: 'Qwen2-1.5B-Instruct-q4f16_1-MLC', name: 'Qwen2 1.5B' }
-  ];
+  public models = [...DEFAULT_MODELS];
+  public showAllModels = signal(false);
   protected selectedModel = signal(this.models[0].id);
 
   @ViewChild('prompt') promptInput!: ElementRef<HTMLInputElement>;
@@ -80,13 +85,33 @@ export class TodoListAiComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.initModelFromWebLlm();
+    // Initial load uses DEFAULT_MODELS, so no need to call initModelFromWebLlm unless toggle is true
+    // But for consistency let's respect initial state
+    this.updateModelList();
     await this.initEngine(this.selectedModel());
   }
-  initModelFromWebLlm() {
-    const modelList: ModelRecord[] = prebuiltAppConfig.model_list;
-    console.log('modelList from webllm:', modelList);
-    this.models = prebuiltAppConfig.model_list.map((m) => { return { id: m.model_id, name: m.model } });
+
+  toggleModelSource() {
+    this.showAllModels.set(!this.showAllModels());
+    this.updateModelList();
+  }
+
+  updateModelList() {
+    if (this.showAllModels()) {
+      const modelList: ModelRecord[] = prebuiltAppConfig.model_list;
+      console.log('modelList from webllm:', modelList);
+      this.models = modelList.map((m) => { return { id: m.model_id, name: m.model_id } }); // Use model_id as name for clarity in full list
+    } else {
+      this.models = [...DEFAULT_MODELS];
+    }
+
+    // Ensure selected model is still valid, or reset to first available
+    const currentSelected = this.selectedModel();
+    const modelExists = this.models.some(m => m.id === currentSelected);
+    if (!modelExists && this.models.length > 0) {
+      this.selectedModel.set(this.models[0].id);
+      this.initEngine(this.models[0].id); // Re-init engine if model changed implicitly
+    }
   }
 
   async onModelChange(modelId: string) {

@@ -40,16 +40,23 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <mat-form-field class="model-selector">
-    <mat-label>Select Model</mat-label>
-    <mat-select [value]="selectedModel()"
-                (selectionChange)="onModelChange($event.value)"
-                [disabled]="!ready()">
-      @for (model of models; track model.id) {
-      <mat-option [value]="model.id">{{model.name}}</mat-option>
-      }
-    </mat-select>
-  </mat-form-field>
+  <div class="model-controls">
+    <mat-slide-toggle [checked]="showAllModels()"
+                      (change)="toggleModelSource()">
+      Show all models
+    </mat-slide-toggle>
+
+    <mat-form-field class="model-selector">
+      <mat-label>Select Model</mat-label>
+      <mat-select [value]="selectedModel()"
+                  (selectionChange)="onModelChange($event.value)"
+                  [disabled]="!ready()">
+        @for (model of models; track model.id) {
+        <mat-option [value]="model.id">{{model.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
 
 
   <!-- @if (!ready()) { -->

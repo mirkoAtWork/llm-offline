@@ -38,9 +38,16 @@ mat-list-item .content span {
   flex: 1;
 }
 
-.model-selector {
+.model-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin-inline: 16px;
   margin-top: 16px;
+}
+
+.model-selector {
+  width: 100%;
 }
 
 .reply-card {
