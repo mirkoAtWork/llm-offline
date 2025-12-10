@@ -1,7 +1,21 @@
 .translator-container {
+    padding: 16px;
     display: flex;
     flex-direction: column;
+    gap: 16px;
     height: 100%;
+}
+
+.translator-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.lang-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
 }
 
 .translation-panels {

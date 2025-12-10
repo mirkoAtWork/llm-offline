@@ -86,16 +86,25 @@
         </mat-expansion-panel>
     </mat-accordion>
 
+
     <div class="progress-bar-container">
         <h5>Download Translate progress: </h5>
         <mat-progress-bar mode="determinate"
                           [value]="loadingDetector() * 100"></mat-progress-bar>
     </div>
-    <div class="detected-language">
-        DetectedLanguage:
-        @if(detectedLang().detectedLanguage != '' && detectedLang().detectedLanguage != "und") {
-        {{ detectedLang().detectedLanguage }} - Confidence: {{ detectedLang().confidence }}
-        }
+    <div class="autodectect-container">
+        <div class="translator-controls">
+            <mat-slide-toggle [checked]="autoDetectLanguage()"
+                              (change)="autoDetectLanguage.set($event.checked)">
+                Auto-detect Language
+            </mat-slide-toggle>
+        </div>
+        <div class="detected-language">
+            DetectedLanguage:
+            @if(detectedLang().detectedLanguage != '' && detectedLang().detectedLanguage != "und") {
+            {{ detectedLang().detectedLanguage }} - Confidence: {{ detectedLang().confidence }}
+            }
+        </div>
     </div>
     <div class="translation-panels">
         <!-- Source Panel -->

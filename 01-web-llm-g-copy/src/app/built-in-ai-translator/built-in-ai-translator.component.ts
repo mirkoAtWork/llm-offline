@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 export interface IDetectionResult {
@@ -31,7 +32,8 @@ export interface IDetectionResult {
         MatButtonModule,
         MatIconModule,
         MatSelectModule,
-        MatProgressBar
+        MatProgressBar,
+        MatSlideToggleModule
     ],
     templateUrl: './built-in-ai-translator.component.html',
     styleUrl: './built-in-ai-translator.component.css'
@@ -61,6 +63,7 @@ export class BuiltInAiTranslatorComponent implements OnInit {
     translatedText = signal('');
     sourceLang = signal('en');
     targetLang = signal('es');
+    autoDetectLanguage = signal(false);
 
     // Computed/Accessors for Tab Index
     get sourceLangIndex(): number {
@@ -175,7 +178,18 @@ export class BuiltInAiTranslatorComponent implements OnInit {
     async detectLanguage() {
         if (this.detector) {
             const result = await this.detector.detect(this.sourceText())
-            this.detectedLang.set(result[0]);
+            const bestMatch = result[0];
+            this.detectedLang.set(bestMatch);
+
+            if (this.autoDetectLanguage() && bestMatch && bestMatch.detectedLanguage) {
+                const detectedCode = bestMatch.detectedLanguage;
+                // check if we support this language
+                const supportedLang = this.languages.find(l => l.code === detectedCode);
+                if (supportedLang && detectedCode !== this.sourceLang()) {
+                    this.sourceLang.set(detectedCode);
+                }
+            }
+
             this.translate()
         }
     }
