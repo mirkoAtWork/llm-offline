@@ -32,13 +32,42 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: white;
-    /* or theme background */
+    /* background-color: white; Removed to support dark theme */
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.12));
+    /* Use var if available or fallback */
     padding: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
     min-height: 400px;
+}
+
+/* ... */
+
+.detected-language {
+    padding: 16px;
+    /* background-color: #f5f5f5; Removed */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    /* Optional separator */
+}
+
+/* ... */
+
+.info-content h3 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--mat-sys-primary);
+    /* Assuming this var exists or will fallback/fail gracefully */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding-bottom: 4px;
+}
+
+.info-content h4 {
+    margin-top: 12px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    color: inherit;
+    /* changed from #333 */
 }
 
 .swap-container {
@@ -81,6 +110,20 @@ textarea {
     .translation-panels {
         flex-direction: column;
     }
+
+    .panel {
+        min-height: 250px;
+    }
+
+    .swap-container {
+        padding-top: 0;
+        align-items: center;
+        padding: 8px 0;
+    }
+
+    .swap-container mat-icon {
+        transform: rotate(90deg);
+    }
 }
 
 /* Accordion Styles (Consistent with Mediapipe/Todo-List AI) */
@@ -90,7 +133,6 @@ textarea {
 
 .detected-language {
     padding: 16px;
-    background-color: #f5f5f5;
 }
 
 .translation-panels {
@@ -111,8 +153,8 @@ textarea {
     margin-top: 16px;
     margin-bottom: 8px;
     font-weight: 600;
-    color: var(--mat-sys-primary);
-    border-bottom: 1px solid #eee;
+    /* color: var(--mat-sys-primary); Keep if it works, otherwise standard color */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     padding-bottom: 4px;
 }
 
@@ -120,7 +162,7 @@ textarea {
     margin-top: 12px;
     margin-bottom: 4px;
     font-weight: 600;
-    color: #333;
+    color: inherit;
 }
 
 .info-content p {
