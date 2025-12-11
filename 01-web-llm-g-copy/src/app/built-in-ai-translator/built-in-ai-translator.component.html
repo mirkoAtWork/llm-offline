@@ -41,14 +41,24 @@
                     <mat-step label="Language Detector API Tutorial">
                         <p>Tutorial: Come rilevare la lingua.</p>
                         <ol>
-                            <li>Verifica disponibilità:
-                                <code>const available = (await window.ai.languageDetector.capabilities()).available;</code>
+                            <li>Crea il detector, registrando un monitor per il download:
+                                <br />
+                                <pre><code>{{
+`this.detector = await LanguageDetector.create({
+    monitor: (m: any) => {
+        m.addEventListener('downloadprogress', (e: any) => {
+            console.log(\`Downloaded \$\{e.loaded * 100\}%\`);
+        });
+    },
+});`
+                                }}</code></pre>
+                                <br />
                             </li>
-                            <li>Crea il detector:
-                                <code>const detector = await window.ai.languageDetector.create();</code>
-                            </li>
-                            <li>Rileva:
-                                <code>const results = await detector.detect('Ciao mondo');</code>
+                            <li>Rileva la lingua del testo:
+                                <br />
+                                <pre><code>{{
+`const results = await this.detector.detect('Ciao mondo');`
+                                }}</code></pre>
                             </li>
                         </ol>
                     </mat-step>
@@ -58,13 +68,29 @@
                         <p>Tutorial: Come tradurre testo.</p>
                         <ol>
                             <li>Verifica disponibilità:
-                                <code>const canTranslate = await window.translation.canTranslate({{ '{' }} sourceLanguage: 'en', targetLanguage: 'es' {{ '}' }});</code>
+                                <br />
+                                <pre><code>{{
+`const availability = await Translator.availability({ 'en', 'it' });
+if (availability == 'unavailable') {
+    console.log('Translation not available');
+}`
+                                }}</code></pre>
                             </li>
                             <li>Crea il traduttore:
-                                <code>const translator = await window.translation.createTranslator({{ '{' }} sourceLanguage: 'en', targetLanguage: 'es' {{ '}' }});</code>
+                                <br />
+                                <pre><code>{{
+`if (availability == 'available') {
+    const translation = await Translator.create({
+        'en', 'it'
+    });
+}`
+                                }}</code></pre>
                             </li>
                             <li>Traduci:
-                                <code>const translated = await translator.translate('Hello world');</code>
+                                <br />
+                                <pre><code>{{
+`const translation = await translation.translate('Hello World');`
+                                }}</code></pre>
                             </li>
                         </ol>
                     </mat-step>

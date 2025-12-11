@@ -189,8 +189,6 @@ export class BuiltInAiTranslatorComponent implements OnInit {
                     this.sourceLang.set(detectedCode);
                 }
             }
-
-            this.translate()
         }
     }
 

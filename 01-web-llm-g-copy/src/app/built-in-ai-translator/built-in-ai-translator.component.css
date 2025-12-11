@@ -187,3 +187,18 @@ textarea {
     white-space: nowrap;
     margin: 0;
 }
+
+.info-content pre {
+    background-color: rgba(128, 128, 128, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.info-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    white-space: pre;
+}
