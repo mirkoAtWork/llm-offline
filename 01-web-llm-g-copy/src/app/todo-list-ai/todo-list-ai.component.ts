@@ -54,9 +54,15 @@ const DEFAULT_MODELS = [
 })
 export class TodoListAiComponent implements OnInit {
   protected readonly todos = signal<Todo[]>([
-    { text: 'Wash clothes', done: true },
-    { text: 'Wash my car', done: true },
-    { text: 'Pet the dog', done: false },
+    { text: 'Language Detector (Built-in AI Translator API)', done: true },
+    { text: 'Translator (Built-in AI Translator API)', done: true },
+    { text: 'Prompt and other APIs (Built-in AI Experimental API)', done: true },
+    { text: 'A Chat Bot? (Built-in AI Experimental API)', done: false },
+    { text: 'Webllm library, explore all APIs', done: false },
+    { text: 'MediaPipe library, explore and try gemma 4n in local', done: false },
+    { text: 'MediaPipe library, in python?', done: false },
+    { text: 'Page Picky Ai, chrome extension improvments', done: false },
+    { text: 'Well, but something with agentic AI??? indagggiing like a best 🐗', done: false }
   ]);
   protected readonly ready = signal(false);
   protected readonly progress = signal(0);
