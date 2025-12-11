@@ -15,6 +15,7 @@ import { MatSelect, MatOption } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatStepperModule } from '@angular/material/stepper';
 
 const DEFAULT_MODELS = [
   { id: 'Llama-3.2-3B-Instruct-q4f32_1-MLC', name: 'Llama 3.2 3B' },
@@ -45,7 +46,8 @@ const DEFAULT_MODELS = [
     MatOption,
     FormsModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatStepperModule
   ],
   templateUrl: './todo-list-ai.component.html',
   styleUrl: './todo-list-ai.component.css'

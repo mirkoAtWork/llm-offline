@@ -7,35 +7,41 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="info-content">
-        <h3>Cos'è WebLLM</h3>
-        <p>
-          <strong>WebLLM</strong> è una libreria ad alte prestazioni che porta i Large Language Models (LLM) e i Large
-          Multimodal Models (LMM) direttamente nei browser web.
-        </p>
+        <mat-stepper orientation="vertical"
+                     [linear]="false">
+          <!-- Step 1: Overview -->
+          <mat-step label="Cos'è WebLLM">
+            <h3>Cos'è WebLLM</h3>
+            <p>
+              <strong>WebLLM</strong> è una libreria ad alte prestazioni che porta i Large Language Models (LLM) e i
+              Large
+              Multimodal Models (LMM) direttamente nei browser web.
+            </p>
+            <h3>Come funziona</h3>
+            <p>
+              Utilizza <strong>WebGPU</strong> per l'accelerazione hardware direttamente nel browser, permettendo
+              l'esecuzione di modelli pesanti senza la necessità di inviare dati a un server (Privacy First). Tutto
+              avviene localmente sul tuo dispositivo.
+            </p>
+          </mat-step>
 
-        <h3>Come funziona</h3>
-        <p>
-          Utilizza <strong>WebGPU</strong> per l'accelerazione hardware direttamente nel browser, permettendo
-          l'esecuzione
-          di modelli pesanti senza la necessità di inviare dati a un server (Privacy First). Tutto avviene localmente
-          sul
-          tuo dispositivo.
-        </p>
+          <!-- Step 2: Comandi Principali -->
+          <mat-step label="Comandi Principali">
+            <h3>Inizializzazione</h3>
+            <p>Inizializza il motore AI con il modello specificato:</p>
+            <pre><code>CreateMLCEngine(modelId, config)</code></pre>
 
-        <h3>Comandi Principali</h3>
-        <ul>
-          <li>
-            <code>CreateMLCEngine(modelId, config)</code>: Inizializza il motore AI con il modello specificato.
-          </li>
-          <li>
-            <code>engine.chat.completions.create({{ '{' }} messages {{ '}' }})</code>: Genera una risposta basata sulla
-            cronologia della
-            chat.
-          </li>
-          <li>
-            <code>engine.resetChat()</code>: Pulisce la cronologia della conversazione corrente.
-          </li>
-        </ul>
+            <h3>Chat Completion</h3>
+            <p>Genera una risposta basata sulla cronologia della chat:</p>
+            <pre><code>{{
+`engine.chat.completions.create(...)`
+            }}</code></pre>
+
+            <h3>Reset Chat</h3>
+            <p>Pulisce la cronologia della conversazione corrente:</p>
+            <pre><code>engine.resetChat()</code></pre>
+          </mat-step>
+        </mat-stepper>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
