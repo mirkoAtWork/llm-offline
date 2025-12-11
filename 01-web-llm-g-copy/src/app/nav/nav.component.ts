@@ -30,7 +30,7 @@ export class NavComponent {
   private breakpointObserver = inject(BreakpointObserver);
   protected themeService = inject(ThemeService);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Small, Breakpoints.Medium])
     .pipe(
       map(result => result.matches),
       shareReplay()
