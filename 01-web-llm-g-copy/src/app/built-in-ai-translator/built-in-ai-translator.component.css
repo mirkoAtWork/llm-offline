@@ -52,6 +52,7 @@
     margin-top: 16px;
     margin-bottom: 8px;
     font-weight: 600;
+    font-size: 20px;
     color: var(--mat-sys-primary);
     /* Assuming this var exists or will fallback/fail gracefully */
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -201,4 +202,38 @@ textarea {
     padding: 0;
     border-radius: 0;
     white-space: pre;
+}
+
+.section-icon {
+    vertical-align: middle;
+    margin-right: 8px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: var(--mat-sys-primary);
+}
+
+.api-list {
+    list-style-type: none;
+    /* Remove default bullets */
+    padding-left: 0;
+}
+
+.api-list li {
+    display: flex;
+    align-items: flex-start;
+    /* Changed to flex-start for multi-line support */
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.api-list mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    /* Ensure icon doesn't shrink */
+    color: var(--mat-sys-secondary);
+    margin-top: 3px;
+    /* visual adjustment for text alignment since we use flex-start */
 }
