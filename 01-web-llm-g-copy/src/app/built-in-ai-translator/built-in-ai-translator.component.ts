@@ -1,4 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit, signal } from '@angular/core';
+
 
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -38,7 +39,8 @@ export interface IDetectionResult {
     templateUrl: './built-in-ai-translator.component.html',
     styleUrl: './built-in-ai-translator.component.css'
 })
-export class BuiltInAiTranslatorComponent implements OnInit {
+export class BuiltInAiTranslatorComponent implements OnInit, OnDestroy {
+
     // ref.: https://web.dev/ai-translator/
     // ref.: https://web.dev/ai-translator/translate-text/ 
     // ref.: https://web.dev/ai-translator/detect-language/
@@ -56,9 +58,15 @@ export class BuiltInAiTranslatorComponent implements OnInit {
         { code: 'it', name: 'Italian' }
     ];
 
-    detector: any;
+    detector: any; //LanguageDetector | undefined | null;
+    translator: any; //Translator | undefined | null;
+    lastSourceLang: string | undefined;
+    lastTargetLang: string | undefined;
+
     detectedLang = signal<IDetectionResult>({ detectedLanguage: '', confidence: 0 });
-    loadingDetector = signal(0);
+
+    loadingEvent = signal<any>({});
+    loadingDetector = computed(() => { return !!this.loadingEvent() ? this.loadingEvent().loaded : 0 });
     sourceText = signal('');
     translatedText = signal('');
     sourceLang = signal('en');
@@ -93,6 +101,7 @@ export class BuiltInAiTranslatorComponent implements OnInit {
 
     async checkForBuiltInAiTranslator() {
         if ('LanguageDetector' in window) {
+            this.loadingEvent.set({ loaded: 0 });
             // The Language Detector API is available.
             const LanguageDetector = window.LanguageDetector;
             // @ts-ignore
@@ -100,7 +109,7 @@ export class BuiltInAiTranslatorComponent implements OnInit {
                 // @ts-ignore
                 monitor: (m: any) => {
                     m.addEventListener('downloadprogress', (e: any) => {
-                        this.loadingDetector.set(e.loaded);
+                        this.loadingEvent.set(e);
                         console.log(`Downloaded ${e.loaded * 100}%`);
                     });
                 },
@@ -150,29 +159,56 @@ export class BuiltInAiTranslatorComponent implements OnInit {
         if ('Translator' in self) {
             const sourceLanguage = this.sourceLang();
             const targetLanguage = this.targetLang();
+
             if (sourceLanguage == targetLanguage) {
                 this.translatedText.set(this.sourceText());
                 return;
             }
+            // Check if we can reuse the existing translator
+            if (this.translator && this.lastSourceLang === sourceLanguage && this.lastTargetLang === targetLanguage) {
+                // Reuse existing translator
+                const translatedText = await this.translator.translate(this.sourceText());
+                this.translatedText.set(translatedText);
+                return;
+            }
+
+            // Clean up old translator if languages changed
+            if (this.translator) {
+                this.translator?.destroy();
+                this.translator = null;
+            }
+
             // @ts-ignore
             const availability = await Translator.availability({ sourceLanguage, targetLanguage });
             if (availability == 'unavailable') {
                 console.log('Translation not available');
                 this.translatedText.set('Translation not available');
             }
-            if (availability == 'available') {
+            //if (availability == 'available') {
+            else {
+                this.loadingEvent.set({ loaded: 0 });
                 // @ts-ignore
-                const translation = await Translator.create({
-                    sourceLanguage, targetLanguage
+                this.translator = await Translator.create({
+                    sourceLanguage, targetLanguage,
+                    monitor: (m: any) => {
+                        m.addEventListener('downloadprogress', (e: any) => {
+                            this.loadingEvent.set(e);
+                            console.log(`Downloaded ${e.loaded * 100}%`);
+                        });
+                    }
                 });
-                const translatedText = await translation.translate(this.sourceText())
+                this.lastSourceLang = sourceLanguage;
+                this.lastTargetLang = targetLanguage;
+
+                const translatedText = await this.translator.translate(this.sourceText())
                 this.translatedText.set(translatedText);
             }
         }
-        // Placeholder for actual translation logic
-        //console.log(`Translating "${this.sourceText()}" from ${this.sourceLang()} to ${this.targetLang()}`);
-        // Simulate translation for now
-        //this.translatedText.set(`[Translated to ${this.targetLang()}]: ${this.sourceText()}`);
+    }
+
+    ngOnDestroy(): void {
+        this.detector?.destroy();
+        this.translator?.destroy();
     }
 
     async detectLanguage() {
